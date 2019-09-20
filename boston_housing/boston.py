@@ -2,8 +2,8 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
-from sklearn.tree import DecisionTreeRegressor
 
+from sklearn.tree import DecisionTreeRegressor
 from sklearn.datasets import load_boston
 from sklearn.model_selection import train_test_split, ShuffleSplit, GridSearchCV
 from sklearn.metrics import r2_score, mean_absolute_error, make_scorer
@@ -115,8 +115,9 @@ def main():
     """
 
     df = pd.DataFrame(boston.data, columns=boston.feature_names)
-    X = pd.DataFrame(boston.data, columns=boston.feature_names)
     df['PRICE'] = boston.target
+
+    X = pd.DataFrame(boston.data, columns=boston.feature_names)
     y = boston.target
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0, test_size=0.2)
