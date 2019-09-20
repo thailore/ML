@@ -55,33 +55,6 @@ def fit_model(X, y):
     return grid.best_estimator_
 
 
-def main():
-    """
-    X is features, y is target, df is DataFrame of all data
-    """
-
-    df = pd.DataFrame(boston.data, columns=boston.feature_names)
-    X = pd.DataFrame(boston.data, columns=boston.feature_names)
-    df['PRICE'] = boston.target
-    y = boston.target
-
-    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0, test_size=0.2)
-
-    print_price_stats(y)
-    coefficient_matrix = np.corrcoef(df.values.T)
-
-    display_price_coefficients(coefficient_matrix, df)
-
-    model = fit_model(X_train, y_train)
-
-    model_training_and_testing_stats(X_test, X_train, model, y_test, y_train)
-
-    test_house = [[0.00632, 18.0, 2.31, 0.0, 0.538, 4.575, 65.2, 4.0900, 1.0, 296.0, 15.3, 296.90, 4.98]]
-    print("Prediction: ${}".format(model.predict(test_house) * 1000))
-
-    print("Parameter 'max_depth' is {} for the optimal model.".format(model.get_params()['max_depth']))
-
-
 def model_training_and_testing_stats(X_test, X_train, model, y_test, y_train):
     true_value = y_train
     predicted_value = model.predict(X_train)
@@ -134,6 +107,32 @@ def print_price_stats(y):
     print("Mean price: ${}".format(mean_price))
     print("Median price ${}".format(median_price))
     print("Standard deviation of prices: ${}\n".format(std_price))
+
+
+def main():
+    """
+    X is features, y is target, df is DataFrame of all data
+    """
+
+    df = pd.DataFrame(boston.data, columns=boston.feature_names)
+    X = pd.DataFrame(boston.data, columns=boston.feature_names)
+    df['PRICE'] = boston.target
+    y = boston.target
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0, test_size=0.2)
+
+    print_price_stats(y)
+    coefficient_matrix = np.corrcoef(df.values.T)
+
+    display_price_coefficients(coefficient_matrix, df)
+
+    model = fit_model(X_train, y_train)
+
+    model_training_and_testing_stats(X_test, X_train, model, y_test, y_train)
+
+    test_house = [[0.00632, 18.0, 2.31, 0.0, 0.538, 4.575, 65.2, 4.0900, 1.0, 296.0, 15.3, 296.90, 4.98]]
+    print("Prediction: ${}".format(model.predict(test_house) * 1000))
+    print("Parameter 'max_depth' is {} for the optimal model.".format(model.get_params()['max_depth']))
 
 
 if __name__ == '__main__':
